@@ -781,26 +781,43 @@ tbody tr:hover{background:#fafaf8}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const SCREENS=['boarding','clients','transactions','fees','disputes','settlements','ledger'];
+const SCREENS=['boarding','clients','client-detail','client-txns','client-statements','transactions','fees','disputes','settlements','ledger'];
 const META={
-  boarding:    {bc:'Core /',    title:'Boarding',     cta:'New application',icon:'ti-plus'},
-  clients:     {bc:'Core /',    title:'Clients',       cta:'Add client',     icon:'ti-plus'},
-  transactions:{bc:'Core /',    title:'Transactions',  cta:'Export',         icon:'ti-download'},
-  fees:        {bc:'Finance /', title:'Fees',           cta:'Fee schedule',   icon:'ti-edit'},
-  disputes:    {bc:'Finance /', title:'Disputes',       cta:'New case',       icon:'ti-plus'},
-  settlements: {bc:'Finance /', title:'Settlements',    cta:'Preview batch',  icon:'ti-player-play'},
-  ledger:      {bc:'Finance /', title:'Ledger',         cta:'Manual entry',   icon:'ti-plus'}
+  boarding:              {bc:'Core /',                      title:'Boarding',              cta:'New application', icon:'ti-plus',        nav:'boarding'},
+  clients:               {bc:'Core /',                      title:'Clients',               cta:'Add client',      icon:'ti-plus',        nav:'clients'},
+  'client-detail':       {bc:'Clients /',                   title:'Blossom Retail Co.',    cta:'Edit client',     icon:'ti-edit',        nav:'clients'},
+  'client-txns':         {bc:'Blossom Retail Co. /',        title:'Transactions',          cta:'Export',          icon:'ti-download',    nav:'clients'},
+  'client-statements':   {bc:'Blossom Retail Co. /',        title:'Statements',            cta:'Download all',    icon:'ti-download',    nav:'clients'},
+  transactions:          {bc:'Core /',                      title:'Transactions',          cta:'Export',          icon:'ti-download',    nav:'transactions'},
+  fees:                  {bc:'Finance /',                   title:'Fees',                  cta:'Fee schedule',    icon:'ti-edit',        nav:'fees'},
+  disputes:              {bc:'Finance /',                   title:'Disputes',              cta:'New case',        icon:'ti-plus',        nav:'disputes'},
+  settlements:           {bc:'Finance /',                   title:'Settlements',           cta:'Preview batch',   icon:'ti-player-play', nav:'settlements'},
+  ledger:                {bc:'Finance /',                   title:'Ledger',                cta:'Manual entry',    icon:'ti-plus',        nav:'ledger'}
 };
 function show(id){
   SCREENS.forEach(s=>{document.getElementById('scr-'+s).classList.toggle('active',s===id)});
-  document.querySelectorAll('.ni[onclick]').forEach(n=>{
-    n.classList.toggle('active',(n.getAttribute('onclick')||'').includes("'"+id+"'"));
-  });
   const m=META[id]; if(!m)return;
+  document.querySelectorAll('.ni[onclick]').forEach(n=>{
+    n.classList.toggle('active',(n.getAttribute('onclick')||'').includes("'"+m.nav+"'"));
+  });
   document.getElementById('bc').textContent=m.bc;
   document.getElementById('pt').textContent=m.title;
   const b=document.getElementById('cta');
   b.innerHTML=`<i class="ti ${m.icon}"></i> ${m.cta}`;
+}
+function showClient(){show('client-detail')}
+function showClientTxns(){show('client-txns')}
+function showClientStatements(){show('client-statements')}
+function setSearchTab(el,ph){
+  document.querySelectorAll('.srch-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('clientSearchInput').placeholder=ph;
+}
+function setTxnTab(el,tab){
+  document.querySelectorAll('.txn-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.txnp').forEach(p=>p.classList.remove('active'));
+  document.getElementById('txnp-'+tab).classList.add('active');
 }
 function buildChart(id,base,f1,f2,bs,be,bv,ns,yMax,yStep,fmt){
   const data=Array.from({length:52},(_,i)=>{
