@@ -1,0 +1,835 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--cpb:#000;--cpw:#fff;--cpg:#8FE2B0;--cpf:#3C5346;--cpm:#E5E6E1;--cpgm:#5dbf88;--cpgd:#2a6640;--bdr:3px}
+.app{display:flex;height:100vh;min-height:720px;border:0.5px solid #d0d1cb;border-radius:4px;overflow:hidden;background:var(--cpm)}
+.sidebar{width:210px;flex-shrink:0;background:var(--cpb);display:flex;flex-direction:column}
+.sl{padding:18px 16px 14px;border-bottom:0.5px solid #222;display:flex;align-items:center;gap:10px}
+.lm{width:32px;height:32px;background:var(--cpg);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ln{font-size:15px;font-weight:500;color:var(--cpw);letter-spacing:-0.01em;line-height:1}
+.lt{font-size:10px;color:#666;margin-top:2px}
+.nav{flex:1;padding:8px 0}
+.ns{padding:14px 14px 4px;font-size:9px;font-weight:500;color:#555;letter-spacing:0.08em;text-transform:uppercase}
+.ni{display:flex;align-items:center;gap:9px;padding:7px 14px;margin:1px 6px;border-radius:3px;cursor:pointer;font-size:12px;color:#888}
+.ni:hover{background:#1a1a1a;color:#ccc}
+.ni.active{background:var(--cpg);color:var(--cpb);font-weight:500}
+.ni i{font-size:14px}
+.sf{padding:12px 14px;border-top:0.5px solid #222;display:flex;align-items:center;gap:9px}
+.av{width:28px;height:28px;border-radius:50%;background:var(--cpf);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--cpg)}
+.un{font-size:12px;font-weight:500;color:var(--cpw)}
+.ur{font-size:10px;color:#666}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:50px;background:var(--cpw);border-bottom:0.5px solid #d0d1cb;display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+.tbl{display:flex;align-items:center;gap:10px}
+.bcrumb{font-size:12px;color:#888}
+.pgtitle{font-size:14px;font-weight:500;color:var(--cpb)}
+.tbr{display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border:0.5px solid #ccc;border-radius:var(--bdr);font-size:12px;color:#444;background:transparent;cursor:pointer}
+.btn:hover{background:var(--cpm)}
+.btn-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:0.5px solid #ccc;border-radius:var(--bdr);font-size:14px;color:#555;background:transparent;cursor:pointer}
+.btn-icon:hover{background:var(--cpm)}
+.btp{background:var(--cpb);color:var(--cpw);border-color:var(--cpb)}
+.btp:hover{background:#222}
+.content{flex:1;overflow-y:auto;padding:18px}
+.scr{display:none}.scr.active{display:block}
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.krow3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.kc{background:var(--cpw);border:0.5px solid #d0d1cb;border-radius:var(--bdr);padding:13px 15px}
+.kl{font-size:11px;color:#888;margin-bottom:5px}
+.kv{font-size:21px;font-weight:500;color:var(--cpb)}
+.kch{font-size:11px;margin-top:3px}
+.ku{color:var(--cpgd)}.kd{color:#b91c1c}
+.card{background:var(--cpw);border:0.5px solid #d0d1cb;border-radius:var(--bdr);overflow:hidden;margin-bottom:14px}
+.ch{padding:11px 15px;border-bottom:0.5px solid #e8e9e4;display:flex;align-items:center;justify-content:space-between}
+.ct{font-size:13px;font-weight:500;color:var(--cpb)}
+.ca{display:flex;gap:6px}
+.fr{display:flex;gap:7px;padding:9px 15px;border-bottom:0.5px solid #e8e9e4;background:#f8f8f6;flex-wrap:wrap}
+.fi{padding:5px 9px;border:0.5px solid #ccc;border-radius:var(--bdr);font-size:12px;color:var(--cpb);background:var(--cpw)}
+table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+thead th{padding:7px 12px;text-align:left;font-size:11px;font-weight:500;color:#666;border-bottom:0.5px solid #e8e9e4;background:#f8f8f6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+tbody td{padding:8px 12px;border-bottom:0.5px solid #f0f0ec;color:var(--cpb);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#fafaf8}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:2px;font-size:11px;font-weight:500}
+.bs{background:var(--cpg);color:var(--cpf)}
+.bb{background:#d1fae5;color:#065f46}
+.bc2{background:#dbeafe;color:#1e40af}
+.bk{background:#ede9fe;color:#4c1d95}
+.br{background:#fef3c7;color:#92400e}
+.bi{background:#dbeafe;color:#1e40af}
+.bd{background:#fee2e2;color:#991b1b}
+.bn{background:var(--cpm);color:#555}
+.mono{font-family:var(--font-mono);font-size:11px}
+.twoc{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.drow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid #f0f0ec;font-size:12px}
+.drow:last-child{border-bottom:none}
+.dlbl{color:#888}.dval{color:var(--cpb);font-weight:500}
+.bc-chart{height:110px;background:#f8f8f6;border-radius:2px;display:flex;align-items:flex-end;padding:10px 12px;gap:5px}
+.bar{flex:1;background:var(--cpg);border-radius:2px 2px 0 0;opacity:.6}
+.bar.hi{opacity:1}
+.prw{margin-bottom:9px}
+.prr{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.prl{color:#888}.prv{color:var(--cpb);font-weight:500}
+.prt{height:5px;background:#e8e9e4;border-radius:99px;overflow:hidden}
+.prf{height:100%;border-radius:99px}
+.tli{display:flex;gap:10px;padding:9px 0;border-bottom:0.5px solid #f0f0ec}
+.tli:last-child{border-bottom:none}
+.tdot{width:7px;height:7px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.dg{background:var(--cpf)}.da{background:#d97706}.dn{background:#aaa}.drr{background:#b91c1c}
+.tt{font-size:12px;font-weight:500;color:var(--cpb)}
+.tm{font-size:11px;color:#888}
+.cr{color:var(--cpgd);font-weight:500}.neg{color:#b91c1c;font-weight:500}
+.run{font-family:var(--font-mono);font-size:11px;color:var(--cpb)}
+.pgbar{padding:9px 15px;display:flex;align-items:center;justify-content:space-between;border-top:0.5px solid #e8e9e4}
+.pginfo{font-size:12px;color:#888}
+.pgnav{display:flex;gap:4px}
+.pipe{display:flex;margin-bottom:16px;background:var(--cpw);border:0.5px solid #d0d1cb;border-radius:var(--bdr);overflow:hidden}
+.ps{flex:1;padding:14px 12px;border-right:0.5px solid #e8e9e4}
+.ps:last-child{border-right:none}
+.ps:hover{background:#fafaf9}
+.pi{width:28px;height:28px;border-radius:3px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;font-size:14px}
+.pc{font-size:20px;font-weight:500;color:var(--cpb);line-height:1}
+.plb{font-size:11px;color:#888;margin-top:3px}
+.ci{display:flex;align-items:center;gap:8px;color:var(--cpb)}
+.cip{color:var(--cpf);font-size:15px}.ciw{color:#d97706;font-size:15px}.cif{color:#b91c1c;font-size:15px}
+.legend-dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+.srch-tab{flex:1;padding:8px 6px;text-align:center;font-size:12px;color:#888;cursor:pointer;border-right:0.5px solid #d0d1cb}
+.srch-tab:last-child{border-right:none}
+.srch-tab.active{background:var(--cpb);color:var(--cpw);font-weight:500}
+.srch-tab:hover:not(.active){background:var(--cpm)}
+.txn-tab{padding:9px 15px;font-size:12px;color:#888;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-0.5px;white-space:nowrap}
+.txn-tab.active{color:var(--cpb);border-bottom-color:var(--cpb);font-weight:500}
+.txn-tab:hover:not(.active){color:#555}
+.txnp{display:none}.txnp.active{display:block}
+.clink{background:var(--cpw);border:0.5px solid #d0d1cb;border-radius:var(--bdr);padding:13px 15px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.clink:hover{background:#fafaf8}
+.clico{width:32px;height:32px;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+.bklnk{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#888;cursor:pointer;margin-bottom:14px;padding:4px 0}
+.bklnk:hover{color:var(--cpb)}
+.ci3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.cl4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+</style>
+
+<div class="app">
+  <div class="sidebar">
+    <div class="sl">
+      <div class="lm">
+        <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+          <rect x="1" y="1" width="16" height="16" rx="2" stroke="#000" stroke-width="1.5"/>
+          <path d="M5 9h8M9 5v8" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div><div class="ln">CreatePay</div><div class="lt">Operations</div></div>
+    </div>
+    <nav class="nav">
+      <div class="ns">Core</div>
+      <div class="ni active" onclick="show('boarding')"><i class="ti ti-clipboard-check"></i> Boarding</div>
+      <div class="ni" onclick="show('clients')"><i class="ti ti-building-store"></i> Clients</div>
+      <div class="ni" onclick="show('transactions')"><i class="ti ti-arrows-exchange"></i> Transactions</div>
+      <div class="ns">Finance</div>
+      <div class="ni" onclick="show('fees')"><i class="ti ti-receipt"></i> Fees</div>
+      <div class="ni" onclick="show('disputes')"><i class="ti ti-alert-triangle"></i> Disputes</div>
+      <div class="ni" onclick="show('settlements')"><i class="ti ti-building-bank"></i> Settlements</div>
+      <div class="ni" onclick="show('ledger')"><i class="ti ti-book"></i> Ledger</div>
+      <div class="ns">Admin</div>
+      <div class="ni"><i class="ti ti-users"></i> Team</div>
+      <div class="ni"><i class="ti ti-settings"></i> Settings</div>
+    </nav>
+    <div class="sf">
+      <div class="av">PM</div>
+      <div><div class="un">Peter Matassa</div><div class="ur">Operations</div></div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="tbl">
+        <span class="bcrumb" id="bc">Core /</span>
+        <span class="pgtitle" id="pt">Boarding</span>
+      </div>
+      <div class="tbr">
+        <button class="btn"><i class="ti ti-download"></i> Export</button>
+        <button class="btn btp" id="cta"><i class="ti ti-plus"></i> New application</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ══════════ BOARDING ══════════ -->
+      <div class="scr active" id="scr-boarding">
+        <div class="card" style="margin-bottom:16px">
+          <div class="ch">
+            <div>
+              <div class="ct">CreatePay Merchants Boarded</div>
+              <div style="font-size:11px;color:#888;margin-top:2px">Week-by-week new merchants reaching live status — last 52 weeks</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#888"><span class="legend-dot" style="background:#8FE2B0"></span> Weekly total</span>
+              <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#888"><span class="legend-dot" style="background:#000"></span> 4-wk avg</span>
+            </div>
+          </div>
+          <div style="padding:14px 16px 10px">
+            <div style="position:relative;width:100%;height:180px">
+              <canvas id="boardingChart"></canvas>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-top:4px;padding:0 2px">
+              <span>May '24</span><span>Aug '24</span><span>Nov '24</span><span>Feb '25</span><span>May '25</span>
+            </div>
+          </div>
+        </div>
+        <div class="krow3">
+          <div class="kc"><div class="kl">Avg. time to live</div><div class="kv">4.2 days</div><div class="kch ku">-0.8d vs last month</div></div>
+          <div class="kc"><div class="kl">KYB pass rate (30d)</div><div class="kv">78%</div><div class="kch ku">+3% vs prior period</div></div>
+          <div class="kc"><div class="kl">Rejections MTD</div><div class="kv">19</div><div class="kch kd">12 KYB · 7 credit</div></div>
+        </div>
+        <div class="pipe">
+          <div class="ps"><div class="pi" style="background:#f0f0ec"><i class="ti ti-file-text" style="color:#888"></i></div><div class="pc">214</div><div class="plb">Application received</div></div>
+          <div class="ps"><div class="pi" style="background:#ede9fe"><i class="ti ti-shield-check" style="color:#4c1d95"></i></div><div class="pc">98</div><div class="plb">KYB / AML review</div></div>
+          <div class="ps"><div class="pi" style="background:#dbeafe"><i class="ti ti-credit-card" style="color:#1e40af"></i></div><div class="pc">61</div><div class="plb">Credit check</div></div>
+          <div class="ps"><div class="pi" style="background:#d1fae5"><i class="ti ti-server" style="color:#065f46"></i></div><div class="pc">34</div><div class="plb">Boarded at processor</div></div>
+          <div class="ps"><div class="pi" style="background:#8FE2B0"><i class="ti ti-circle-check" style="color:#3C5346"></i></div><div class="pc" style="color:#3C5346">7</div><div class="plb" style="color:#3C5346;font-weight:500">Live today</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:14px;align-items:start">
+          <div class="card" style="margin-bottom:0">
+            <div class="ch"><span class="ct">Boarding queue</span><div class="ca"><button class="btn"><i class="ti ti-columns"></i> Columns</button></div></div>
+            <div class="fr">
+              <input class="fi" placeholder="Name, MID, ref…" style="flex:1;min-width:100px">
+              <select class="fi"><option>All stages</option><option>Received</option><option>KYB / AML</option><option>Credit check</option><option>Boarded</option><option>Live</option></select>
+              <select class="fi"><option>All assignees</option><option>S. Khan</option><option>L. Park</option></select>
+            </div>
+            <table>
+              <colgroup><col style="width:18%"><col style="width:11%"><col style="width:11%"><col style="width:17%"><col style="width:13%"><col style="width:13%"><col style="width:10%"><col style="width:7%"></colgroup>
+              <thead><tr><th>Business name</th><th>Ref</th><th>Vertical</th><th>Stage</th><th>KYB / AML</th><th>Credit check</th><th>Submitted</th><th></th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:500">Mangian Ltd</td><td class="mono">APP-1974</td><td>SaaS</td><td><span class="badge bs"><i class="ti ti-circle-check" style="font-size:10px"></i> Live</span></td><td><span class="badge bs">Passed</span></td><td><span class="badge bs">Passed</span></td><td>28 Apr</td><td><button class="btn">View</button></td></tr>
+                <tr><td style="font-weight:500">Bloom &amp; Co.</td><td class="mono">APP-1298</td><td>Retail</td><td><span class="badge bb"><i class="ti ti-server" style="font-size:10px"></i> Boarded</span></td><td><span class="badge bs">Passed</span></td><td><span class="badge bs">Passed</span></td><td>25 Apr</td><td><button class="btn">View</button></td></tr>
+                <tr><td style="font-weight:500">Helix Analytics</td><td class="mono">APP-1295</td><td>SaaS</td><td><span class="badge bc2"><i class="ti ti-credit-card" style="font-size:10px"></i> Credit check</span></td><td><span class="badge bs">Passed</span></td><td><span class="badge br">In progress</span></td><td>22 Apr</td><td><button class="btn">View</button></td></tr>
+                <tr><td style="font-weight:500">Ember Hospitality</td><td class="mono">APP-1293</td><td>Food &amp; Bev</td><td><span class="badge bk"><i class="ti ti-shield-check" style="font-size:10px"></i> KYB / AML</span></td><td><span class="badge br">Awaiting</span></td><td><span class="badge bn">Pending</span></td><td>20 Apr</td><td><button class="btn">View</button></td></tr>
+                <tr><td style="font-weight:500">Redwood Logistics</td><td class="mono">APP-1281</td><td>Logistics</td><td><span class="badge bd"><i class="ti ti-x" style="font-size:10px"></i> Rejected</span></td><td><span class="badge bd">Failed</span></td><td><span class="badge bn">N/A</span></td><td>14 Apr</td><td><button class="btn">View</button></td></tr>
+              </tbody>
+            </table>
+            <div class="pgbar">
+              <span class="pginfo">Showing 1–5 of 214 applications</span>
+              <div class="pgnav">
+                <button class="btn-icon"><i class="ti ti-chevron-left"></i></button>
+                <button class="btn-icon"><i class="ti ti-chevron-right"></i></button>
+              </div>
+            </div>
+          </div>
+          <!-- Checks overview only — Needs Attention removed -->
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="card" style="margin-bottom:0">
+              <div class="ch"><span class="ct">Checks overview</span></div>
+              <div style="padding:10px 14px">
+                <div style="font-size:11px;color:#888;margin-bottom:8px;font-weight:500;letter-spacing:.04em;text-transform:uppercase">KYB / AML</div>
+                <div style="display:flex;flex-direction:column">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid #f0f0ec;font-size:12px"><div class="ci"><i class="ti ti-check cip"></i> Passed</div><span style="font-size:13px;font-weight:500">412</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid #f0f0ec;font-size:12px"><div class="ci"><i class="ti ti-clock ciw"></i> Awaiting review</div><span style="font-size:13px;font-weight:500">98</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:12px"><div class="ci"><i class="ti ti-x cif"></i> Failed</div><span style="font-size:13px;font-weight:500;color:#b91c1c">12</span></div>
+                </div>
+                <div style="font-size:11px;color:#888;margin:12px 0 8px;font-weight:500;letter-spacing:.04em;text-transform:uppercase">Credit check</div>
+                <div style="display:flex;flex-direction:column">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid #f0f0ec;font-size:12px"><div class="ci"><i class="ti ti-check cip"></i> Passed</div><span style="font-size:13px;font-weight:500">348</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid #f0f0ec;font-size:12px"><div class="ci"><i class="ti ti-clock ciw"></i> In progress</div><span style="font-size:13px;font-weight:500">61</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:12px"><div class="ci"><i class="ti ti-x cif"></i> Failed</div><span style="font-size:13px;font-weight:500;color:#b91c1c">7</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ CLIENTS — SEARCH ══════════ -->
+      <div class="scr" id="scr-clients">
+        <div style="max-width:580px;margin:28px auto 0;padding:0 8px">
+          <div style="text-align:center;margin-bottom:22px">
+            <div style="font-size:18px;font-weight:500;color:var(--cpb)">Client search</div>
+            <div style="font-size:12px;color:#888;margin-top:4px">Search across 1,842 active clients</div>
+          </div>
+          <div style="display:flex;border:0.5px solid #d0d1cb;border-radius:var(--bdr);overflow:hidden;background:var(--cpw);margin-bottom:10px">
+            <div class="srch-tab active" onclick="setSearchTab(this,'Enter MID…')">MID</div>
+            <div class="srch-tab" onclick="setSearchTab(this,'Enter TID…')">TID</div>
+            <div class="srch-tab" onclick="setSearchTab(this,'Enter client name…')">Client Name</div>
+            <div class="srch-tab" onclick="setSearchTab(this,'Enter Companies House number…')">Co. House No.</div>
+            <div class="srch-tab" onclick="setSearchTab(this,'Enter post code…')">Post Code</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:32px">
+            <input id="clientSearchInput" class="fi" placeholder="Enter MID…" style="flex:1;height:38px;font-size:13px">
+            <button class="btn btp" style="height:38px;padding:0 18px"><i class="ti ti-search"></i> Search</button>
+          </div>
+        </div>
+        <div style="max-width:880px;margin:0 auto;padding:0 8px">
+          <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Recently viewed</div>
+          <div class="card" style="margin-bottom:0">
+            <table>
+              <colgroup><col style="width:18%"><col style="width:11%"><col style="width:12%"><col style="width:17%"><col style="width:9%"><col style="width:8%"><col style="width:13%"><col style="width:12%"></colgroup>
+              <thead><tr><th>Client name</th><th>MID</th><th>TID(s)</th><th>Companies House No.</th><th>Post code</th><th>Status</th><th>Contract start</th><th></th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:500">Blossom Retail Co.</td><td class="mono">MID-00812</td><td class="mono" style="font-size:11px">TID-3814, +2</td><td class="mono">09234812</td><td>EC1A 2BN</td><td><span class="badge bs">Active</span></td><td>12 Jan 2024</td><td><button class="btn" onclick="showClient()">View</button></td></tr>
+                <tr><td style="font-weight:500">CloudPOS Ltd</td><td class="mono">MID-00941</td><td class="mono" style="font-size:11px">TID-4002, +5</td><td class="mono">11820041</td><td>SW1A 1AA</td><td><span class="badge bs">Active</span></td><td>04 Mar 2023</td><td><button class="btn" onclick="showClient()">View</button></td></tr>
+                <tr><td style="font-weight:500">Nori Foods Group</td><td class="mono">MID-01103</td><td class="mono" style="font-size:11px">TID-4418</td><td class="mono">14021983</td><td>E1 6RF</td><td><span class="badge br">KYC review</span></td><td>22 Oct 2024</td><td><button class="btn" onclick="showClient()">View</button></td></tr>
+                <tr><td style="font-weight:500">Meridian Beauty</td><td class="mono">MID-01247</td><td class="mono" style="font-size:11px">TID-4821, +1</td><td class="mono">IE-4920812</td><td>D01 F5P2</td><td><span class="badge bs">Active</span></td><td>05 Feb 2025</td><td><button class="btn" onclick="showClient()">View</button></td></tr>
+                <tr><td style="font-weight:500">Apex Fulfilment</td><td class="mono">MID-00673</td><td class="mono" style="font-size:11px">TID-3201</td><td class="mono">08119022</td><td>WC2N 5DU</td><td><span class="badge bd">Suspended</span></td><td>17 Jun 2022</td><td><button class="btn" onclick="showClient()">View</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ CLIENT DETAIL ══════════ -->
+      <div class="scr" id="scr-client-detail">
+        <div class="bklnk" onclick="show('clients')"><i class="ti ti-arrow-left"></i> Client search</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;background:var(--cpg);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:var(--cpf)">B</div>
+            <div>
+              <div style="font-size:16px;font-weight:500;color:var(--cpb)">Blossom Retail Co.</div>
+              <div style="display:flex;gap:8px;margin-top:3px;align-items:center">
+                <span class="mono" style="font-size:11px;color:#888">MID-00812</span>
+                <span class="badge bs">Active</span>
+                <span style="font-size:11px;color:#888">MCC 5311 · Department Stores</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button class="btn"><i class="ti ti-edit"></i> Edit</button>
+            <button class="btn-icon"><i class="ti ti-dots-vertical"></i></button>
+          </div>
+        </div>
+        <div class="ci3">
+          <div class="card" style="margin-bottom:0">
+            <div class="ch"><span class="ct">Business details</span></div>
+            <div style="padding:10px 14px">
+              <div class="drow"><span class="dlbl">Legal name</span><span class="dval">Blossom Retail Co. Ltd</span></div>
+              <div class="drow"><span class="dlbl">Trading name</span><span class="dval">Blossom Retail</span></div>
+              <div class="drow"><span class="dlbl">Co. House No.</span><span class="dval mono" style="font-size:12px">09234812</span></div>
+              <div class="drow"><span class="dlbl">VAT number</span><span class="dval mono" style="font-size:12px">GB 291 8821 04</span></div>
+              <div class="drow"><span class="dlbl">Contract start</span><span class="dval">12 Jan 2024</span></div>
+            </div>
+          </div>
+          <div class="card" style="margin-bottom:0">
+            <div class="ch"><span class="ct">Registered address</span></div>
+            <div style="padding:10px 14px">
+              <div class="drow"><span class="dlbl">Address line 1</span><span class="dval">14 Market Street</span></div>
+              <div class="drow"><span class="dlbl">Address line 2</span><span class="dval">Floor 3</span></div>
+              <div class="drow"><span class="dlbl">City</span><span class="dval">London</span></div>
+              <div class="drow"><span class="dlbl">Post code</span><span class="dval">EC1A 2BN</span></div>
+              <div class="drow"><span class="dlbl">Country</span><span class="dval">United Kingdom</span></div>
+            </div>
+          </div>
+          <div class="card" style="margin-bottom:0">
+            <div class="ch"><span class="ct">Account details</span></div>
+            <div style="padding:10px 14px">
+              <div class="drow"><span class="dlbl">MID</span><span class="dval mono" style="font-size:12px">MID-00812</span></div>
+              <div class="drow"><span class="dlbl">MCC</span><span class="dval">5311 — Dept. Stores</span></div>
+              <div class="drow"><span class="dlbl">Portfolio</span><span class="dval">Portfolio A</span></div>
+              <div class="drow"><span class="dlbl">Account manager</span><span class="dval">S. Khan</span></div>
+              <div class="drow"><span class="dlbl">Vol. (30d)</span><span class="dval cr">£482,300</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="cl4">
+          <div class="clink">
+            <div class="clico" style="background:#f0f0ec"><i class="ti ti-building" style="color:#555"></i></div>
+            <div style="min-width:0">
+              <div style="font-size:12px;font-weight:500">Parent entity</div>
+              <div style="font-size:11px;color:#888;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Blossom Group Holdings Ltd</div>
+            </div>
+            <i class="ti ti-chevron-right" style="margin-left:auto;color:#ccc;flex-shrink:0"></i>
+          </div>
+          <div class="clink">
+            <div class="clico" style="background:#ede9fe"><i class="ti ti-sitemap" style="color:#4c1d95"></i></div>
+            <div>
+              <div style="font-size:12px;font-weight:500">Sub departments</div>
+              <div style="font-size:11px;color:#888;margin-top:1px">3 departments</div>
+            </div>
+            <i class="ti ti-chevron-right" style="margin-left:auto;color:#ccc;flex-shrink:0"></i>
+          </div>
+          <div class="clink" onclick="showClientTxns()">
+            <div class="clico" style="background:#dbeafe"><i class="ti ti-arrows-exchange" style="color:#1e40af"></i></div>
+            <div>
+              <div style="font-size:12px;font-weight:500">Recent transactions</div>
+              <div style="font-size:11px;color:#888;margin-top:1px">£482,300 vol. (30d)</div>
+            </div>
+            <i class="ti ti-chevron-right" style="margin-left:auto;color:#ccc;flex-shrink:0"></i>
+          </div>
+          <div class="clink" onclick="showClientStatements()">
+            <div class="clico" style="background:#d1fae5"><i class="ti ti-file-invoice" style="color:#065f46"></i></div>
+            <div>
+              <div style="font-size:12px;font-weight:500">Statements</div>
+              <div style="font-size:11px;color:#888;margin-top:1px">By month</div>
+            </div>
+            <i class="ti ti-chevron-right" style="margin-left:auto;color:#ccc;flex-shrink:0"></i>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Terminal IDs (TIDs)</span><button class="btn btp"><i class="ti ti-plus"></i> Add TID</button></div>
+          <table>
+            <colgroup><col style="width:14%"><col style="width:18%"><col style="width:14%"><col style="width:15%"><col style="width:18%"><col style="width:11%"><col style="width:10%"></colgroup>
+            <thead><tr><th>TID</th><th>Terminal name</th><th>Type</th><th>Serial no.</th><th>Location</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td class="mono">TID-3814</td><td>Main counter</td><td>Countertop</td><td class="mono">SN-291882</td><td>14 Market St</td><td><span class="badge bs">Active</span></td><td><button class="btn">View</button></td></tr>
+              <tr><td class="mono">TID-3815</td><td>Café counter</td><td>Countertop</td><td class="mono">SN-291883</td><td>14 Market St</td><td><span class="badge bs">Active</span></td><td><button class="btn">View</button></td></tr>
+              <tr><td class="mono">TID-3816</td><td>Mobile unit</td><td>Portable</td><td class="mono">SN-302214</td><td>Market roaming</td><td><span class="badge bn">Inactive</span></td><td><button class="btn">View</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════ CLIENT TRANSACTIONS ══════════ -->
+      <div class="scr" id="scr-client-txns">
+        <div class="bklnk" onclick="show('client-detail')"><i class="ti ti-arrow-left"></i> Blossom Retail Co.</div>
+        <div style="display:flex;border-bottom:0.5px solid #d0d1cb;background:var(--cpw);border-radius:var(--bdr) var(--bdr) 0 0;border-top:0.5px solid #d0d1cb;border-left:0.5px solid #d0d1cb;border-right:0.5px solid #d0d1cb;padding:0 8px;margin-bottom:14px">
+          <div class="txn-tab active" onclick="setTxnTab(this,'submitted')">Submitted</div>
+          <div class="txn-tab" onclick="setTxnTab(this,'settled')">Settled</div>
+          <div class="txn-tab" onclick="setTxnTab(this,'disputes')">Disputes</div>
+          <div class="txn-tab" onclick="setTxnTab(this,'fees')">Fees</div>
+        </div>
+        <!-- Submitted -->
+        <div class="txnp active" id="txnp-submitted">
+          <div class="krow3" style="margin-bottom:12px">
+            <div class="kc"><div class="kl">Submitted today</div><div class="kv">£12,400</div><div class="kch">42 transactions</div></div>
+            <div class="kc"><div class="kl">Authorised</div><div class="kv">38</div><div class="kch ku">90.5% auth rate</div></div>
+            <div class="kc"><div class="kl">Declined</div><div class="kv" style="color:#b91c1c">4</div><div class="kch kd">9.5% decline rate</div></div>
+          </div>
+          <div class="card">
+            <div class="ch"><span class="ct">Submitted transactions</span><div class="ca"><button class="btn"><i class="ti ti-filter"></i> Filter</button><button class="btn"><i class="ti ti-download"></i> Export</button></div></div>
+            <div class="fr">
+              <input class="fi" placeholder="TXN ID, card, amount…" style="flex:1">
+              <select class="fi"><option>All types</option><option>Sale</option><option>Auth only</option><option>Refund</option></select>
+              <input class="fi" type="date" style="width:130px">
+            </div>
+            <table>
+              <colgroup><col style="width:14%"><col style="width:7%"><col style="width:13%"><col style="width:10%"><col style="width:12%"><col style="width:10%"><col style="width:15%"><col style="width:7%"></colgroup>
+              <thead><tr><th>TXN ID</th><th>Type</th><th>Card</th><th>Amount</th><th>Status</th><th>Auth code</th><th>Timestamp</th><th></th></tr></thead>
+              <tbody>
+                <tr><td class="mono">TXN-9948221</td><td>Sale</td><td class="mono">Visa ••4832</td><td style="font-weight:500">£142.00</td><td><span class="badge bs">Authorised</span></td><td class="mono">A44829</td><td>08 May 09:14</td><td><button class="btn">View</button></td></tr>
+                <tr><td class="mono">TXN-9948101</td><td>Sale</td><td class="mono">MC ••2918</td><td style="font-weight:500">£88.50</td><td><span class="badge bs">Authorised</span></td><td class="mono">A44801</td><td>08 May 08:52</td><td><button class="btn">View</button></td></tr>
+                <tr><td class="mono">TXN-9948034</td><td>Refund</td><td class="mono">Visa ••4832</td><td style="font-weight:500;color:#b91c1c">-£22.00</td><td><span class="badge bi">Processing</span></td><td class="mono">—</td><td>08 May 08:39</td><td><button class="btn">View</button></td></tr>
+                <tr><td class="mono">TXN-9947991</td><td>Sale</td><td class="mono">Amex ••8821</td><td style="font-weight:500">£214.00</td><td><span class="badge bd">Declined</span></td><td class="mono">DECLINED</td><td>08 May 08:21</td><td><button class="btn">View</button></td></tr>
+              </tbody>
+            </table>
+            <div class="pgbar"><span class="pginfo">Showing 1–4 of 42 transactions today</span><div class="pgnav"><button class="btn-icon"><i class="ti ti-chevron-left"></i></button><button class="btn-icon"><i class="ti ti-chevron-right"></i></button></div></div>
+          </div>
+        </div>
+        <!-- Settled -->
+        <div class="txnp" id="txnp-settled">
+          <div class="krow3" style="margin-bottom:12px">
+            <div class="kc"><div class="kl">Settled (30d)</div><div class="kv">£482,300</div><div class="kch ku">+6.2% vs prior period</div></div>
+            <div class="kc"><div class="kl">Transactions settled</div><div class="kv">3,421</div><div class="kch">Last batch: 08 May</div></div>
+            <div class="kc"><div class="kl">Avg. transaction</div><div class="kv">£141.00</div><div class="kch">Across all card types</div></div>
+          </div>
+          <div class="card">
+            <div class="ch"><span class="ct">Settled transactions</span><div class="ca"><button class="btn"><i class="ti ti-filter"></i> Filter</button><button class="btn"><i class="ti ti-download"></i> Export</button></div></div>
+            <div class="fr">
+              <input class="fi" placeholder="TXN ID, batch, card…" style="flex:1">
+              <select class="fi"><option>All card types</option><option>Visa</option><option>Mastercard</option><option>Amex</option></select>
+              <input class="fi" type="date" style="width:130px">
+            </div>
+            <table>
+              <colgroup><col style="width:14%"><col style="width:7%"><col style="width:12%"><col style="width:10%"><col style="width:18%"><col style="width:10%"><col style="width:14%"><col style="width:7%"></colgroup>
+              <thead><tr><th>TXN ID</th><th>Type</th><th>Card</th><th>Amount</th><th>Batch</th><th>Status</th><th>Settled date</th><th></th></tr></thead>
+              <tbody>
+                <tr><td class="mono">TXN-9948221</td><td>Sale</td><td class="mono">Visa ••4832</td><td style="font-weight:500">£142.00</td><td class="mono" style="font-size:10px">BTH-20250508-002</td><td><span class="badge bs">Settled</span></td><td>08 May</td><td><button class="btn">View</button></td></tr>
+                <tr><td class="mono">TXN-9948101</td><td>Sale</td><td class="mono">MC ••2918</td><td style="font-weight:500">£88.50</td><td class="mono" style="font-size:10px">BTH-20250508-002</td><td><span class="badge bs">Settled</span></td><td>08 May</td><td><button class="btn">View</button></td></tr>
+                <tr><td class="mono">TXN-9940821</td><td>Sale</td><td class="mono">Visa ••1144</td><td style="font-weight:500">£320.00</td><td class="mono" style="font-size:10px">BTH-20250507-002</td><td><span class="badge bs">Settled</span></td><td>07 May</td><td><button class="btn">View</button></td></tr>
+                <tr><td class="mono">TXN-9940718</td><td>Sale</td><td class="mono">MC ••9910</td><td style="font-weight:500">£55.00</td><td class="mono" style="font-size:10px">BTH-20250507-002</td><td><span class="badge bs">Settled</span></td><td>07 May</td><td><button class="btn">View</button></td></tr>
+              </tbody>
+            </table>
+            <div class="pgbar"><span class="pginfo">Showing 1–4 of 3,421 settled transactions</span><div class="pgnav"><button class="btn-icon"><i class="ti ti-chevron-left"></i></button><button class="btn-icon"><i class="ti ti-chevron-right"></i></button></div></div>
+          </div>
+        </div>
+        <!-- Disputes -->
+        <div class="txnp" id="txnp-disputes">
+          <div class="krow3" style="margin-bottom:12px">
+            <div class="kc"><div class="kl">Open disputes</div><div class="kv">3</div><div class="kch kd">£478 at risk</div></div>
+            <div class="kc"><div class="kl">Win rate (90d)</div><div class="kv">72%</div><div class="kch ku">Above portfolio avg.</div></div>
+            <div class="kc"><div class="kl">Response due</div><div class="kv" style="color:#b91c1c">1</div><div class="kch kd">Due 09 May</div></div>
+          </div>
+          <div class="card">
+            <div class="ch"><span class="ct">Disputes</span><div class="ca"><button class="btn btp"><i class="ti ti-plus"></i> New case</button></div></div>
+            <table>
+              <colgroup><col style="width:11%"><col style="width:13%"><col style="width:9%"><col style="width:13%"><col style="width:14%"><col style="width:11%"><col style="width:10%"><col style="width:10%"><col style="width:9%"></colgroup>
+              <thead><tr><th>Case ID</th><th>TXN ref</th><th>Amount</th><th>Reason</th><th>Status</th><th>Due date</th><th>Assigned</th><th>Opened</th><th></th></tr></thead>
+              <tbody>
+                <tr><td class="mono">DSP-4402</td><td class="mono">TXN-9941882</td><td style="color:#b91c1c;font-weight:500">£142</td><td>4853</td><td><span class="badge bd">Response due</span></td><td style="color:#b91c1c;font-weight:500">09 May</td><td>S. Khan</td><td>02 May</td><td><button class="btn">Open</button></td></tr>
+                <tr><td class="mono">DSP-4380</td><td class="mono">TXN-9938210</td><td style="color:#b91c1c;font-weight:500">£218</td><td>4863</td><td><span class="badge bi">Submitted</span></td><td>21 May</td><td>S. Khan</td><td>25 Apr</td><td><button class="btn">Open</button></td></tr>
+                <tr><td class="mono">DSP-4341</td><td class="mono">TXN-9921003</td><td style="color:#b91c1c;font-weight:500">£118</td><td>4853</td><td><span class="badge bn">Arbitration</span></td><td>—</td><td>L. Park</td><td>10 Apr</td><td><button class="btn">Open</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Fees -->
+        <div class="txnp" id="txnp-fees">
+          <div class="krow3" style="margin-bottom:12px">
+            <div class="kc"><div class="kl">Fees charged (30d)</div><div class="kv">£1,929</div><div class="kch">IC+ pricing</div></div>
+            <div class="kc"><div class="kl">Blended rate</div><div class="kv">0.40%</div><div class="kch">+2p auth fee</div></div>
+            <div class="kc"><div class="kl">Monthly service fee</div><div class="kv">£95</div><div class="kch">PCI included</div></div>
+          </div>
+          <div class="card">
+            <div class="ch"><span class="ct">Fee events</span><div class="ca"><button class="btn"><i class="ti ti-download"></i> Export</button></div></div>
+            <table>
+              <colgroup><col style="width:13%"><col style="width:14%"><col style="width:16%"><col style="width:10%"><col style="width:10%"><col style="width:9%"><col style="width:10%"><col style="width:10%"><col style="width:8%"></colgroup>
+              <thead><tr><th>Fee ID</th><th>TXN ref</th><th>Type</th><th>Gross</th><th>Interchange</th><th>Scheme</th><th>Processor</th><th>Net fee</th><th>Date</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">FEE-441819</td><td class="mono">TXN-9948221</td><td>Transaction processing</td><td>£142.00</td><td>£0.28</td><td>£0.07</td><td>£0.06</td><td class="cr">£0.57</td><td>08 May</td></tr>
+                <tr><td class="mono">FEE-441781</td><td class="mono">TXN-9948101</td><td>Transaction processing</td><td>£88.50</td><td>£0.18</td><td>£0.04</td><td>£0.04</td><td class="cr">£0.36</td><td>08 May</td></tr>
+                <tr><td class="mono">FEE-441742</td><td class="mono">—</td><td>PCI compliance</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="cr">£10.00</td><td>01 May</td></tr>
+                <tr><td class="mono">FEE-441701</td><td class="mono">—</td><td>Monthly service fee</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="cr">£95.00</td><td>01 May</td></tr>
+              </tbody>
+            </table>
+            <div class="pgbar"><span class="pginfo">Showing 1–4 of 3,421 fee events</span><div class="pgnav"><button class="btn-icon"><i class="ti ti-chevron-left"></i></button><button class="btn-icon"><i class="ti ti-chevron-right"></i></button></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ CLIENT STATEMENTS ══════════ -->
+      <div class="scr" id="scr-client-statements">
+        <div class="bklnk" onclick="show('client-detail')"><i class="ti ti-arrow-left"></i> Blossom Retail Co.</div>
+        <div class="card">
+          <div class="ch"><span class="ct">Monthly statements</span><div class="ca"><button class="btn"><i class="ti ti-download"></i> Download all</button></div></div>
+          <table>
+            <colgroup><col style="width:14%"><col style="width:11%"><col style="width:13%"><col style="width:11%"><col style="width:11%"><col style="width:13%"><col style="width:12%"><col style="width:9%"></colgroup>
+            <thead><tr><th>Period</th><th>Transactions</th><th>Gross volume</th><th>Fees charged</th><th>Disputes</th><th>Net settled</th><th>Statement</th><th></th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:500">April 2025</td><td>3,241</td><td>£458,200</td><td>£1,832</td><td>£218</td><td style="font-weight:500">£456,150</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">March 2025</td><td>3,102</td><td>£441,800</td><td>£1,767</td><td>£0</td><td style="font-weight:500">£440,033</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">February 2025</td><td>2,890</td><td>£398,400</td><td>£1,594</td><td>£142</td><td style="font-weight:500">£396,664</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">January 2025</td><td>2,714</td><td>£372,100</td><td>£1,488</td><td>£0</td><td style="font-weight:500">£370,612</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">December 2024</td><td>4,102</td><td>£621,400</td><td>£2,486</td><td>£280</td><td style="font-weight:500">£618,634</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">November 2024</td><td>2,980</td><td>£408,900</td><td>£1,636</td><td>£0</td><td style="font-weight:500">£407,264</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">October 2024</td><td>2,841</td><td>£389,200</td><td>£1,557</td><td>£118</td><td style="font-weight:500">£387,525</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">September 2024</td><td>2,765</td><td>£378,000</td><td>£1,512</td><td>£0</td><td style="font-weight:500">£376,488</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">August 2024</td><td>2,921</td><td>£401,100</td><td>£1,604</td><td>£0</td><td style="font-weight:500">£399,496</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">July 2024</td><td>2,688</td><td>£362,400</td><td>£1,450</td><td>£0</td><td style="font-weight:500">£360,950</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">June 2024</td><td>2,544</td><td>£340,200</td><td>£1,361</td><td>£0</td><td style="font-weight:500">£338,839</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">May 2024</td><td>2,412</td><td>£321,800</td><td>£1,287</td><td>£0</td><td style="font-weight:500">£320,513</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">April 2024</td><td>2,290</td><td>£298,400</td><td>£1,194</td><td>£0</td><td style="font-weight:500">£297,206</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">March 2024</td><td>2,144</td><td>£278,900</td><td>£1,116</td><td>£0</td><td style="font-weight:500">£277,784</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">February 2024</td><td>1,980</td><td>£254,100</td><td>£1,016</td><td>£0</td><td style="font-weight:500">£253,084</td><td><span class="badge bs">Available</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+              <tr><td style="font-weight:500">January 2024</td><td>1,821</td><td>£228,400</td><td>£914</td><td>£0</td><td style="font-weight:500;color:#888">Partial month</td><td><span class="badge br">Partial</span></td><td><button class="btn"><i class="ti ti-download"></i> PDF</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════ TRANSACTIONS ══════════ -->
+      <div class="scr" id="scr-transactions">
+        <div class="krow">
+          <div class="kc"><div class="kl">Volume today</div><div class="kv">£2.1M</div><div class="kch ku">+12% vs yesterday</div></div>
+          <div class="kc"><div class="kl">Transactions</div><div class="kv">14,832</div><div class="kch ku">+841 vs yesterday</div></div>
+          <div class="kc"><div class="kl">Avg. Trasaction Value</div><div class="kv">£34.99</div><div class="kch kd">-£4 vs yesterday</div></div>
+          <div class="kc"><div class="kl">Decline rate</div><div class="kv">2.4%</div><div class="kch ku">-0.3% improvement</div></div>
+        </div>
+        <div class="card" style="margin-bottom:14px">
+          <div class="ch"><span class="ct">Transaction volume — last 14 days</span></div>
+          <div style="padding:12px 15px"><div class="bc-chart"><div class="bar" style="height:55%"></div><div class="bar" style="height:62%"></div><div class="bar" style="height:48%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:80%"></div><div class="bar hi" style="height:90%"></div><div class="bar" style="height:72%"></div><div class="bar" style="height:68%"></div><div class="bar" style="height:75%"></div><div class="bar" style="height:82%"></div><div class="bar" style="height:78%"></div><div class="bar" style="height:88%"></div><div class="bar hi" style="height:95%"></div></div></div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Transaction log</span><div class="ca"><button class="btn"><i class="ti ti-filter"></i> Filter</button><button class="btn"><i class="ti ti-download"></i> Export</button></div></div>
+          <div class="fr">
+            <input class="fi" placeholder="TXN ID, card, MID…" style="flex:1">
+            <select class="fi"><option>All types</option><option>Sale</option><option>Refund</option><option>Auth only</option></select>
+            <select class="fi"><option>All statuses</option><option>Settled</option><option>Pending</option><option>Declined</option></select>
+            <input class="fi" type="date" style="width:130px">
+          </div>
+          <table>
+            <colgroup><col style="width:13%"><col style="width:17%"><col style="width:7%"><col style="width:13%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:12%"><col style="width:8%"></colgroup>
+            <thead><tr><th>TXN ID</th><th>Client / MID</th><th>Type</th><th>Card</th><th>Amount</th><th>Status</th><th>Auth code</th><th>Timestamp</th><th></th></tr></thead>
+            <tbody>
+              <tr><td class="mono">TXN-9948221</td><td>Blossom Retail<br><span style="color:#888;font-size:10px">MID-00812</span></td><td>Sale</td><td class="mono">Visa ••4832</td><td style="font-weight:500">£142.00</td><td><span class="badge bs">Settled</span></td><td class="mono">A44829</td><td>08 May 09:14</td><td><button class="btn">View</button></td></tr>
+              <tr><td class="mono">TXN-9948198</td><td>CloudPOS Ltd<br><span style="color:#888;font-size:10px">MID-00941</span></td><td>Sale</td><td class="mono">MC ••7721</td><td style="font-weight:500">£3,200.00</td><td><span class="badge bs">Settled</span></td><td class="mono">B81022</td><td>08 May 09:11</td><td><button class="btn">View</button></td></tr>
+              <tr><td class="mono">TXN-9948104</td><td>Meridian Beauty<br><span style="color:#888;font-size:10px">MID-01247</span></td><td>Refund</td><td class="mono">Visa ••2291</td><td style="font-weight:500;color:#b91c1c">-£64.50</td><td><span class="badge bi">Processing</span></td><td class="mono">—</td><td>08 May 08:58</td><td><button class="btn">View</button></td></tr>
+              <tr><td class="mono">TXN-9948031</td><td>Nori Foods<br><span style="color:#888;font-size:10px">MID-01103</span></td><td>Sale</td><td class="mono">Amex ••1003</td><td style="font-weight:500">£880.00</td><td><span class="badge bd">Declined</span></td><td class="mono">DECLINED</td><td>08 May 08:44</td><td><button class="btn">View</button></td></tr>
+              <tr><td class="mono">TXN-9947882</td><td>CloudPOS Ltd<br><span style="color:#888;font-size:10px">MID-00941</span></td><td>Auth</td><td class="mono">Visa ••9910</td><td style="font-weight:500">£599.00</td><td><span class="badge br">Pending</span></td><td class="mono">A91823</td><td>08 May 08:32</td><td><button class="btn">View</button></td></tr>
+            </tbody>
+          </table>
+          <div class="pgbar">
+            <span class="pginfo">Showing 1–5 of 14,832 transactions</span>
+            <div class="pgnav">
+              <button class="btn-icon"><i class="ti ti-chevron-left"></i></button>
+              <button class="btn-icon"><i class="ti ti-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ FEES ══════════ -->
+      <div class="scr" id="scr-fees">
+        <div class="krow">
+          <div class="kc"><div class="kl">Revenue MTD</div><div class="kv">£84,210</div><div class="kch ku">+8.2% vs last month</div></div>
+          <div class="kc"><div class="kl">Processing fees cost</div><div class="kv">£61,430</div><div class="kch">71.9% of gross revenue</div></div>
+          <div class="kc"><div class="kl">Net margin</div><div class="kv">£22,780</div><div class="kch ku">27.1% margin</div></div>
+          <div class="kc"><div class="kl">Blended rate</div><div class="kv">0.38%</div><div class="kch">Across all clients</div></div>
+        </div>
+        <div class="twoc" style="margin-bottom:14px">
+          <div class="card" style="margin-bottom:0">
+            <div class="ch"><span class="ct">Revenue by fee type — MTD</span><span style="font-size:12px;font-weight:500;color:var(--cpb)">£84,210</span></div>
+            <div style="padding:12px 15px">
+              <div class="prw"><div class="prr"><span class="prl">Transaction processing fees</span><span class="prv">£41,200</span></div><div class="prt"><div class="prf" style="width:49%;background:#3C5346"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Terminal rentals</span><span class="prv">£18,600</span></div><div class="prt"><div class="prf" style="width:22%;background:#5dbf88"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Terminal purchases</span><span class="prv">£9,840</span></div><div class="prt"><div class="prf" style="width:12%;background:#8FE2B0"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">PCI fees</span><span class="prv">£6,210</span></div><div class="prt"><div class="prf" style="width:7%;background:#2a6640"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Accessories</span><span class="prv">£4,110</span></div><div class="prt"><div class="prf" style="width:5%;background:#888"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Chargeback fees</span><span class="prv">£2,900</span></div><div class="prt"><div class="prf" style="width:3%;background:#d97706"></div></div></div>
+              <div class="prw" style="margin-bottom:0"><div class="prr"><span class="prl">Other</span><span class="prv">£1,350</span></div><div class="prt"><div class="prf" style="width:2%;background:#aaa"></div></div></div>
+            </div>
+          </div>
+          <div class="card" style="margin-bottom:0">
+            <div class="ch"><span class="ct">Processing fee cost — MTD</span><span style="font-size:12px;font-weight:500;color:#b91c1c">£61,430</span></div>
+            <div style="padding:12px 15px">
+              <div class="prw"><div class="prr"><span class="prl">Interchange</span><span class="prv">£38,200</span></div><div class="prt"><div class="prf" style="width:62%;background:#3C5346"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Scheme fees</span><span class="prv">£12,840</span></div><div class="prt"><div class="prf" style="width:21%;background:#5dbf88"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Processor fees</span><span class="prv">£6,440</span></div><div class="prt"><div class="prf" style="width:10%;background:#8FE2B0"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Chargeback fees</span><span class="prv">£2,750</span></div><div class="prt"><div class="prf" style="width:4%;background:#d97706"></div></div></div>
+              <div class="prw" style="margin-bottom:0"><div class="prr"><span class="prl">Other</span><span class="prv">£1,200</span></div><div class="prt"><div class="prf" style="width:2%;background:#aaa"></div></div></div>
+              <div style="border-top:0.5px solid #e8e9e4;margin-top:12px;padding-top:10px;display:flex;justify-content:space-between;font-size:12px">
+                <span style="color:#888">Total processing cost</span>
+                <span style="font-weight:500;color:#b91c1c">£61,430</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Fee schedule — top clients</span></div>
+          <table><thead><tr><th>Client</th><th>Product</th><th>Rate</th><th>Auth fee</th><th>Monthly</th></tr></thead>
+          <tbody>
+            <tr><td>Blossom Retail</td><td><span class="badge bs">IC+</span></td><td>0.20% +2p</td><td>£0.08</td><td>£95</td></tr>
+            <tr><td>CloudPOS Ltd</td><td><span class="badge bi">Flat rate</span></td><td>1.40%</td><td>—</td><td>£250</td></tr>
+            <tr><td>Meridian Beauty</td><td><span class="badge bs">IC+</span></td><td>0.25% +2p</td><td>£0.08</td><td>£75</td></tr>
+            <tr><td>Nori Foods</td><td><span class="badge br">Custom</span></td><td>0.35%</td><td>£0.10</td><td>£120</td></tr>
+          </tbody></table>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Fee event log</span><button class="btn"><i class="ti ti-filter"></i> Filter</button></div>
+          <table>
+            <thead><tr><th>Fee ID</th><th>Client</th><th>Type</th><th>TXN ref</th><th>Gross</th><th>Processing cost</th><th>Net fee</th><th>Date</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">FEE-441820</td><td>CloudPOS Ltd</td><td>Transaction processing</td><td class="mono">TXN-9948198</td><td>£3,200.00</td><td>£44.80</td><td class="cr">£44.80</td><td>08 May</td></tr>
+              <tr><td class="mono">FEE-441819</td><td>Blossom Retail</td><td>Transaction processing</td><td class="mono">TXN-9948221</td><td>£142.00</td><td>£0.43</td><td class="cr">£0.57</td><td>08 May</td></tr>
+              <tr><td class="mono">FEE-441801</td><td>Meridian Beauty</td><td>Refund reversal</td><td class="mono">TXN-9948104</td><td>£64.50</td><td>£0.18</td><td class="neg">£0.18</td><td>08 May</td></tr>
+              <tr><td class="mono">FEE-441795</td><td>Nori Foods</td><td>Terminal rental</td><td class="mono">—</td><td>£120.00</td><td>—</td><td class="cr">£120.00</td><td>08 May</td></tr>
+              <tr><td class="mono">FEE-441780</td><td>CloudPOS Ltd</td><td>PCI fee</td><td class="mono">—</td><td>£45.00</td><td>—</td><td class="cr">£45.00</td><td>08 May</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════ DISPUTES ══════════ -->
+      <div class="scr" id="scr-disputes">
+        <div class="krow">
+          <div class="kc"><div class="kl">Open disputes</div><div class="kv">127</div><div class="kch kd">+14 this week</div></div>
+          <div class="kc"><div class="kl">Funds at risk</div><div class="kv">£48,320</div><div class="kch">127 cases</div></div>
+          <div class="kc"><div class="kl">Win rate (90d)</div><div class="kv">61%</div><div class="kch ku">+5% vs prior period</div></div>
+          <div class="kc"><div class="kl">Resp. due today</div><div class="kv" style="color:#b91c1c">9</div><div class="kch kd">SLA: 24 hrs</div></div>
+        </div>
+        <div class="twoc" style="margin-bottom:14px">
+          <div class="card">
+            <div class="ch"><span class="ct">By reason code</span></div>
+            <div style="padding:12px 15px">
+              <div class="prw"><div class="prr"><span class="prl">Not as described (4853)</span><span class="prv">52 cases</span></div><div class="prt"><div class="prf" style="width:41%;background:#b91c1c"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Not recognised (4863)</span><span class="prv">38 cases</span></div><div class="prt"><div class="prf" style="width:30%;background:#d97706"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Duplicate (4834)</span><span class="prv">21 cases</span></div><div class="prt"><div class="prf" style="width:17%;background:#3C5346"></div></div></div>
+              <div class="prw"><div class="prr"><span class="prl">Other</span><span class="prv">16 cases</span></div><div class="prt"><div class="prf" style="width:13%;background:#aaa"></div></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="ch"><span class="ct">Recent activity</span></div>
+            <div style="padding:8px 15px">
+              <div class="tli"><div class="tdot drr"></div><div><div class="tt">Apex Fulfilment — £4,200 chargeback</div><div class="tm">4853 · Today 06:32</div></div></div>
+              <div class="tli"><div class="tdot da"></div><div><div class="tt">CloudPOS Ltd — £3,200 pre-arb raised</div><div class="tm">4863 · Yesterday</div></div></div>
+              <div class="tli"><div class="tdot dg"></div><div><div class="tt">Blossom Retail — £142 dispute won</div><div class="tm">4853 · 07 May</div></div></div>
+              <div class="tli"><div class="tdot dn"></div><div><div class="tt">Meridian Beauty — £280 arbitration</div><div class="tm">4834 · 06 May</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Open dispute queue</span><div class="ca"><button class="btn"><i class="ti ti-filter"></i> Filter</button><button class="btn btp"><i class="ti ti-plus"></i> New case</button></div></div>
+          <table>
+            <colgroup><col style="width:10%"><col style="width:14%"><col style="width:13%"><col style="width:10%"><col style="width:10%"><col style="width:14%"><col style="width:10%"><col style="width:10%"><col style="width:9%"></colgroup>
+            <thead><tr><th>Case ID</th><th>Client</th><th>TXN ref</th><th>Amount</th><th>Reason</th><th>Status</th><th>Due date</th><th>Assigned</th><th></th></tr></thead>
+            <tbody>
+              <tr><td class="mono">DSP-4401</td><td>Apex Fulfilment</td><td class="mono">TXN-9802110</td><td style="color:#b91c1c;font-weight:500">£4,200</td><td>4853</td><td><span class="badge bd">Response due</span></td><td style="color:#b91c1c;font-weight:500">09 May</td><td>S. Khan</td><td><button class="btn">Open</button></td></tr>
+              <tr><td class="mono">DSP-4398</td><td>CloudPOS Ltd</td><td class="mono">TXN-9948198</td><td style="color:#b91c1c;font-weight:500">£3,200</td><td>4863</td><td><span class="badge br">Pre-arb</span></td><td>14 May</td><td>L. Park</td><td><button class="btn">Open</button></td></tr>
+              <tr><td class="mono">DSP-4391</td><td>Nori Foods</td><td class="mono">TXN-9941003</td><td style="color:#b91c1c;font-weight:500">£880</td><td>4834</td><td><span class="badge bi">Submitted</span></td><td>18 May</td><td>S. Khan</td><td><button class="btn">Open</button></td></tr>
+              <tr><td class="mono">DSP-4389</td><td>Meridian Beauty</td><td class="mono">TXN-9939221</td><td style="color:#b91c1c;font-weight:500">£280</td><td>4834</td><td><span class="badge bn">Arbitration</span></td><td>—</td><td>L. Park</td><td><button class="btn">Open</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════ SETTLEMENTS ══════════ -->
+      <div class="scr" id="scr-settlements">
+        <div class="card" style="margin-bottom:16px">
+          <div class="ch">
+            <div>
+              <div class="ct">Settlements processed — last 52 weeks</div>
+              <div style="font-size:11px;color:#888;margin-top:2px">Total value settled to clients each week via Griffin FPS</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#888"><span class="legend-dot" style="background:#8FE2B0"></span> Weekly value</span>
+              <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#888"><span class="legend-dot" style="background:#000"></span> 4-wk avg</span>
+            </div>
+          </div>
+          <div style="padding:14px 16px 10px">
+            <div style="position:relative;width:100%;height:180px">
+              <canvas id="settlementsChart"></canvas>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-top:4px;padding:0 2px">
+              <span>May '24</span><span>Aug '24</span><span>Nov '24</span><span>Feb '25</span><span>May '25</span>
+            </div>
+          </div>
+        </div>
+        <div class="krow3">
+          <div class="kc"><div class="kl">Settled today</div><div class="kv">£1.84M</div><div class="kch ku">32 batches</div></div>
+          <div class="kc"><div class="kl">Pending settlement</div><div class="kv">£620K</div><div class="kch">Cutoff 23:00</div></div>
+          <div class="kc"><div class="kl">Failed transfers</div><div class="kv" style="color:#b91c1c">2</div><div class="kch kd">Action required</div></div>
+        </div>
+        <div class="twoc" style="margin-bottom:14px">
+          <div class="card">
+            <div class="ch"><span class="ct">Next settlement run</span></div>
+            <div style="padding:13px 15px">
+              <div class="drow"><span class="dlbl">Cutoff time</span><span class="dval">Today 23:00 GMT</span></div>
+              <div class="drow"><span class="dlbl">Expected payout</span><span class="dval">£620,400</span></div>
+              <div class="drow"><span class="dlbl">Clients due payment</span><span class="dval">48 clients</span></div>
+              <div class="drow"><span class="dlbl">Banking partner</span><span class="dval">Griffin FPS</span></div>
+              <div class="drow"><span class="dlbl">Fee deductions</span><span class="dval">£8,220</span></div>
+              <div style="padding-top:10px"><button class="btn btp" style="width:100%;justify-content:center"><i class="ti ti-player-play"></i> Review Pending</button></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="ch"><span class="ct">Settlement history — last 7 days</span></div>
+            <div style="padding:12px 15px">
+              <div class="bc-chart" style="height:90px"><div class="bar" style="height:60%"></div><div class="bar" style="height:75%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:82%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:88%"></div><div class="bar hi" style="height:95%"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-top:4px"><span>02 May</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Settlements Processed</span><div class="ca"><button class="btn"><i class="ti ti-filter"></i> Filter</button><button class="btn"><i class="ti ti-download"></i> Export</button></div></div>
+          <table>
+            <colgroup><col style="width:20%"><col style="width:13%"><col style="width:11%"><col style="width:9%"><col style="width:11%"><col style="width:11%"><col style="width:13%"><col style="width:8%"><col style="width:4%"></colgroup>
+            <thead><tr><th>Batch ID</th><th>Client</th><th>Gross</th><th>Fees</th><th>Reserve held</th><th>Net payout</th><th>Bank ref</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">BTH-20250508-001</td><td>CloudPOS Ltd</td><td>£1,204,800</td><td>£16,867</td><td>£72,288</td><td style="font-weight:500">£1,115,645</td><td class="mono">FPS-8812991</td><td><span class="badge bs">Settled</span></td><td>08 May</td></tr>
+              <tr><td class="mono">BTH-20250508-002</td><td>Blossom Retail</td><td>£482,300</td><td>£1,929</td><td>£9,646</td><td style="font-weight:500">£470,725</td><td class="mono">FPS-8813004</td><td><span class="badge bs">Settled</span></td><td>08 May</td></tr>
+              <tr><td class="mono">BTH-20250508-003</td><td>Meridian Beauty</td><td>£214,100</td><td>£2,141</td><td>£4,282</td><td style="font-weight:500">£207,677</td><td class="mono">FPS-8813019</td><td><span class="badge br">Pending</span></td><td>08 May</td></tr>
+              <tr><td class="mono">BTH-20250508-004</td><td>Nori Foods</td><td>£88,500</td><td>£1,062</td><td>£5,310</td><td style="font-weight:500">£82,128</td><td class="mono">—</td><td><span class="badge bd">Failed</span></td><td>08 May</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════ LEDGER ══════════ -->
+      <div class="scr" id="scr-ledger">
+        <div class="krow">
+          <div class="kc"><div class="kl">Float balance</div><div class="kv">£8.42M</div><div class="kch">As of 09:00 today</div></div>
+          <div class="kc"><div class="kl">Payables today</div><div class="kv">£620K</div><div class="kch">Settlement run 23:00</div></div>
+          <div class="kc"><div class="kl">Reserve pool</div><div class="kv">£132,400</div><div class="kch ku">14 accounts</div></div>
+          <div class="kc"><div class="kl">Unreconciled</div><div class="kv" style="color:#b91c1c">3</div><div class="kch kd">Requires review</div></div>
+        </div>
+        <div class="twoc" style="margin-bottom:14px">
+          <div class="card">
+            <div class="ch"><span class="ct">Account summary</span></div>
+            <div style="padding:13px 15px">
+              <div class="drow"><span class="dlbl">Operating account</span><span class="dval">£6,104,200</span></div>
+              <div class="drow"><span class="dlbl">Client float (omnibus)</span><span class="dval">£1,980,400</span></div>
+              <div class="drow"><span class="dlbl">Reserve account</span><span class="dval">£132,400</span></div>
+              <div class="drow"><span class="dlbl">Dispute escrow</span><span class="dval">£48,320</span></div>
+              <div class="drow"><span class="dlbl">Fee income (MTD)</span><span class="cr">£84,210</span></div>
+              <div class="drow"><span class="dlbl">Processing fees cost (MTD)</span><span class="neg">£61,430</span></div>
+              <div style="border-top:1px solid #e8e9e4;margin-top:8px;padding-top:10px;display:flex;justify-content:space-between;font-size:13px"><span style="font-weight:500">Net position</span><span class="cr" style="font-size:14px">£22,780</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="ch"><span class="ct">Filter ledger entries</span></div>
+            <div style="padding:12px 15px;display:flex;flex-direction:column;gap:8px">
+              <input class="fi" placeholder="Entry ID, reference, description…" style="width:100%">
+              <select class="fi" style="width:100%"><option>All entry types</option><option>Client settlement</option><option>Fee income</option><option>Processing cost</option><option>Reserve</option><option>Dispute</option><option>Manual adjustment</option></select>
+              <div style="display:flex;gap:8px"><input class="fi" type="date" style="flex:1"><input class="fi" type="date" style="flex:1"></div>
+              <button class="btn btp" style="justify-content:center">Apply filters</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Ledger entries</span><div class="ca"><button class="btn"><i class="ti ti-download"></i> Export CSV</button><button class="btn btp"><i class="ti ti-plus"></i> Manual entry</button></div></div>
+          <table>
+            <colgroup><col style="width:11%"><col style="width:11%"><col style="width:12%"><col style="width:18%"><col style="width:10%"><col style="width:9%"><col style="width:9%"><col style="width:12%"><col style="width:8%"></colgroup>
+            <thead><tr><th>Entry ID</th><th>Date / Time</th><th>Type</th><th>Description</th><th>Account</th><th>Debit</th><th>Credit</th><th>Running bal.</th><th>Ref</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">LED-991204</td><td style="font-size:11px">08 May 09:14</td><td><span class="badge bs">Fee income</span></td><td style="font-size:11px">Txn processing — MID-00812</td><td style="font-size:11px">Operating</td><td>—</td><td class="cr">£0.57</td><td class="run">£6,104,200</td><td class="mono" style="font-size:10px">FEE-441819</td></tr>
+              <tr><td class="mono">LED-991203</td><td style="font-size:11px">08 May 09:11</td><td><span class="badge bs">Fee income</span></td><td style="font-size:11px">Flat rate — MID-00941</td><td style="font-size:11px">Operating</td><td>—</td><td class="cr">£44.80</td><td class="run">£6,104,199</td><td class="mono" style="font-size:10px">FEE-441820</td></tr>
+              <tr><td class="mono">LED-991180</td><td style="font-size:11px">08 May 07:00</td><td><span class="badge bi">Settlement</span></td><td style="font-size:11px">Payout — CloudPOS BTH-001</td><td style="font-size:11px">Client float</td><td class="neg">£1,115,645</td><td>—</td><td class="run">£6,104,154</td><td class="mono" style="font-size:10px">BTH-001</td></tr>
+              <tr><td class="mono">LED-991141</td><td style="font-size:11px">07 May 23:04</td><td><span class="badge br">Reserve</span></td><td style="font-size:11px">Reserve hold — Nori Foods</td><td style="font-size:11px">Reserve</td><td class="neg">£5,310</td><td>—</td><td class="run">£7,219,799</td><td class="mono" style="font-size:10px">MID-01103</td></tr>
+              <tr><td class="mono">LED-991100</td><td style="font-size:11px">07 May 18:22</td><td><span class="badge bd">Dispute</span></td><td style="font-size:11px">Chargeback escrow — DSP-4401</td><td style="font-size:11px">Dispute escrow</td><td class="neg">£4,200</td><td>—</td><td class="run">£7,225,109</td><td class="mono" style="font-size:10px">DSP-4401</td></tr>
+              <tr><td class="mono">LED-991044</td><td style="font-size:11px">07 May 07:00</td><td><span class="badge bn">Proc. cost</span></td><td style="font-size:11px">Interchange — daily net</td><td style="font-size:11px">Operating</td><td class="neg">£2,910</td><td>—</td><td class="run">£7,229,309</td><td class="mono" style="font-size:10px">ICNET-0508</td></tr>
+            </tbody>
+          </table>
+          <div class="pgbar">
+            <span class="pginfo">Showing 1–6 of 24,481 entries</span>
+            <div class="pgnav">
+              <button class="btn-icon"><i class="ti ti-chevron-left"></i></button>
+              <button class="btn-icon"><i class="ti ti-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const SCREENS=['boarding','clients','transactions','fees','disputes','settlements','ledger'];
+const META={
+  boarding:    {bc:'Core /',    title:'Boarding',     cta:'New application',icon:'ti-plus'},
+  clients:     {bc:'Core /',    title:'Clients',       cta:'Add client',     icon:'ti-plus'},
+  transactions:{bc:'Core /',    title:'Transactions',  cta:'Export',         icon:'ti-download'},
+  fees:        {bc:'Finance /', title:'Fees',           cta:'Fee schedule',   icon:'ti-edit'},
+  disputes:    {bc:'Finance /', title:'Disputes',       cta:'New case',       icon:'ti-plus'},
+  settlements: {bc:'Finance /', title:'Settlements',    cta:'Preview batch',  icon:'ti-player-play'},
+  ledger:      {bc:'Finance /', title:'Ledger',         cta:'Manual entry',   icon:'ti-plus'}
+};
+function show(id){
+  SCREENS.forEach(s=>{document.getElementById('scr-'+s).classList.toggle('active',s===id)});
+  document.querySelectorAll('.ni[onclick]').forEach(n=>{
+    n.classList.toggle('active',(n.getAttribute('onclick')||'').includes("'"+id+"'"));
+  });
+  const m=META[id]; if(!m)return;
+  document.getElementById('bc').textContent=m.bc;
+  document.getElementById('pt').textContent=m.title;
+  const b=document.getElementById('cta');
+  b.innerHTML=`<i class="ti ${m.icon}"></i> ${m.cta}`;
+}
+function buildChart(id,base,f1,f2,bs,be,bv,ns,yMax,yStep,fmt){
+  const data=Array.from({length:52},(_,i)=>{
+    const t=base+i*0.46,w=Math.sin(i*f1)*ns+Math.cos(i*f2)*(ns*0.7),bump=(i>=bs&&i<be)?bv:0;
+    return Math.max(Math.round(base*0.5),Math.round(t+w+bump));
+  });
+  const labels=Array.from({length:52},(_,i)=>i===0?'W1':i===13?'W14':i===26?'W27':i===39?'W40':i===51?'W52':'');
+  const avg=data.map((_,i)=>{const sl=data.slice(Math.max(0,i-3),i+1);return Math.round(sl.reduce((a,b)=>a+b,0)/sl.length)});
+  const thr=yMax*0.65;
+  new Chart(document.getElementById(id),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Weekly',data,backgroundColor:data.map(v=>v>=thr?'#3C5346':'#8FE2B0'),borderWidth:0,barPercentage:0.85,categoryPercentage:0.9,order:2},
+      {label:'4-wk avg',data:avg,type:'line',borderColor:'#000',borderWidth:1.5,borderDash:[4,3],pointRadius:0,fill:false,tension:0.4,order:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        title:items=>`Week ${items[0].dataIndex+1}`,
+        label:item=>`${item.dataset.label}: ${fmt(Math.round(item.raw))}`
+      }}},
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{color:'#aaa',font:{size:11},autoSkip:false,maxRotation:0}},
+        y:{grid:{color:'#f0f0ec',lineWidth:0.5},border:{display:false,dash:[3,3]},
+           ticks:{color:'#aaa',font:{size:11},stepSize:yStep,callback:v=>fmt(Math.round(v))},
+           beginAtZero:true,max:yMax}
+      }
+    }
+  });
+}
+buildChart('boardingChart',   14,0.8,1.3,35,42,6,3,50,10,v=>v);
+buildChart('settlementsChart',18,0.7,1.1,33,41,8,4,60,10,v=>'£'+v+'M');
+</script>
