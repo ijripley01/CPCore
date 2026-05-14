@@ -127,6 +127,7 @@ tbody tr:hover{background:#fafaf8}
       <div class="ni" onclick="show('transactions')"><i class="ti ti-arrows-exchange"></i> Transactions</div>
       <div class="ni" onclick="show('disputes')"><i class="ti ti-alert-triangle"></i> Disputes</div>
       <div class="ni" onclick="show('boarding')"><i class="ti ti-clipboard-check"></i> Boarding</div>
+      <div class="ni" onclick="show('logistics')"><i class="ti ti-package"></i> Logistics</div>
       <div class="ns">Finance</div>
       <div class="ni" onclick="show('analytics')"><i class="ti ti-chart-bar"></i> Analytics</div>
       <div class="ni" onclick="show('fees')"><i class="ti ti-receipt"></i> Fees</div>
@@ -814,13 +815,273 @@ tbody tr:hover{background:#fafaf8}
         </div>
       </div>
 
+      <!-- ══════════ LOGISTICS ══════════ -->
+      <div class="scr" id="scr-logistics">
+        <div class="krow">
+          <div class="kc"><div class="kl">Total stock</div><div class="kv">148</div><div class="kch">Payment terminals</div></div>
+          <div class="kc"><div class="kl">In stock</div><div class="kv" style="color:var(--cpgd)">52</div><div class="kch ku">Available to deploy</div></div>
+          <div class="kc"><div class="kl">At client</div><div class="kv" style="color:#1e40af">84</div><div class="kch">Across 41 clients</div></div>
+          <div class="kc"><div class="kl">In refurbishment</div><div class="kv" style="color:#4c1d95">8</div><div class="kch">Avg. 5 days turnaround</div></div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Stock inventory</span><div class="ca"><button class="btn"><i class="ti ti-download"></i> Export</button><button class="btn btp"><i class="ti ti-plus"></i> Add item</button></div></div>
+          <div class="fr">
+            <input id="lgSearch" class="fi" placeholder="Serial no., model, client…" style="flex:1;min-width:120px" oninput="filterLogistics()">
+            <select id="lgType" class="fi" onchange="filterLogistics()"><option value="">All types</option><option value="Payment terminal">Payment terminal</option><option value="PIN pad">PIN pad</option></select>
+            <select id="lgStatus" class="fi" onchange="filterLogistics()"><option value="">All statuses</option><option value="In stock">In stock</option><option value="In preparation">In preparation</option><option value="At client">At client</option><option value="In refurbishment">In refurbishment</option><option value="Retired">Retired</option></select>
+            <select id="lgClient" class="fi" onchange="filterLogistics()"><option value="">All clients</option><option value="Blossom Retail Co.">Blossom Retail Co.</option><option value="CloudPOS Ltd">CloudPOS Ltd</option><option value="Meridian Beauty">Meridian Beauty</option><option value="Apex Fulfilment">Apex Fulfilment</option></select>
+          </div>
+          <table id="lgTable">
+            <colgroup><col style="width:5%"><col style="width:16%"><col style="width:11%"><col style="width:13%"><col style="width:14%"><col style="width:19%"><col style="width:12%"><col style="width:10%"></colgroup>
+            <thead><tr><th></th><th>Model</th><th>Serial no.</th><th>Item type</th><th>Status</th><th>Client</th><th>Last changed</th><th></th></tr></thead>
+            <tbody>
+              <tr data-type="Payment terminal" data-status="At client" data-client="Blossom Retail Co.">
+                <td><svg width="14" height="20" viewBox="0 0 20 28" fill="none"><rect x="0.5" y="0.5" width="19" height="27" rx="2.5" fill="#f0f0ec" stroke="#ccc"/><rect x="2" y="2" width="16" height="11" rx="1" fill="#1a1a1a"/><rect x="2.5" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="2.5" y="19" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="19" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="19" width="4" height="2.5" rx="0.5" fill="#8FE2B0"/><rect x="2.5" y="24" width="15" height="2" rx="0.5" fill="#e5e5e5"/></svg></td>
+                <td style="font-weight:500">Castles S1F2</td>
+                <td class="mono">SN-291882</td>
+                <td>Payment terminal</td>
+                <td><span class="badge bc2">At client</span></td>
+                <td>Blossom Retail Co.</td>
+                <td>12 Jan 2025</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+              <tr data-type="Payment terminal" data-status="At client" data-client="Blossom Retail Co.">
+                <td><svg width="14" height="22" viewBox="0 0 20 32" fill="none"><rect x="0.5" y="0.5" width="19" height="31" rx="2.5" fill="#f0f0ec" stroke="#ccc"/><rect x="2" y="2" width="16" height="14" rx="1" fill="#1a1a1a"/><rect x="2.5" y="18" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="18" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="18" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="2.5" y="22" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="22" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="22" width="4" height="2.5" rx="0.5" fill="#8FE2B0"/><rect x="2.5" y="28" width="15" height="2" rx="0.5" fill="#e5e5e5"/></svg></td>
+                <td style="font-weight:500">Castles S1F4</td>
+                <td class="mono">SN-291883</td>
+                <td>Payment terminal</td>
+                <td><span class="badge bc2">At client</span></td>
+                <td>Blossom Retail Co.</td>
+                <td>12 Jan 2025</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+              <tr data-type="Payment terminal" data-status="In refurbishment" data-client="">
+                <td><svg width="12" height="18" viewBox="0 0 17 26" fill="none"><rect x="0.5" y="0.5" width="16" height="25" rx="3" fill="#f0f0ec" stroke="#ccc"/><rect x="2" y="2" width="13" height="14" rx="1" fill="#1a1a1a"/><rect x="3" y="19" width="11" height="4" rx="1.5" fill="#8FE2B0"/></svg></td>
+                <td style="font-weight:500">Castles S1MINI2</td>
+                <td class="mono">SN-302214</td>
+                <td>Payment terminal</td>
+                <td><span class="badge bk">In refurbishment</span></td>
+                <td style="color:#aaa">—</td>
+                <td>28 Mar 2025</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+              <tr data-type="Payment terminal" data-status="In stock" data-client="">
+                <td><svg width="14" height="20" viewBox="0 0 20 28" fill="none"><rect x="0.5" y="0.5" width="19" height="27" rx="2.5" fill="#f0f0ec" stroke="#ccc"/><rect x="2" y="2" width="16" height="11" rx="1" fill="#1a1a1a"/><rect x="2.5" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="2.5" y="19" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="19" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="19" width="4" height="2.5" rx="0.5" fill="#8FE2B0"/><rect x="2.5" y="24" width="15" height="2" rx="0.5" fill="#e5e5e5"/></svg></td>
+                <td style="font-weight:500">Castles S1F2</td>
+                <td class="mono">SN-318801</td>
+                <td>Payment terminal</td>
+                <td><span class="badge bs">In stock</span></td>
+                <td style="color:#aaa">—</td>
+                <td>02 May 2025</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+              <tr data-type="Payment terminal" data-status="In preparation" data-client="CloudPOS Ltd">
+                <td><svg width="14" height="22" viewBox="0 0 20 32" fill="none"><rect x="0.5" y="0.5" width="19" height="31" rx="2.5" fill="#f0f0ec" stroke="#ccc"/><rect x="2" y="2" width="16" height="14" rx="1" fill="#1a1a1a"/><rect x="2.5" y="18" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="18" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="18" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="2.5" y="22" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="22" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="22" width="4" height="2.5" rx="0.5" fill="#8FE2B0"/><rect x="2.5" y="28" width="15" height="2" rx="0.5" fill="#e5e5e5"/></svg></td>
+                <td style="font-weight:500">Castles S1F4</td>
+                <td class="mono">SN-319004</td>
+                <td>Payment terminal</td>
+                <td><span class="badge br">In preparation</span></td>
+                <td>CloudPOS Ltd</td>
+                <td>07 May 2025</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+              <tr data-type="Payment terminal" data-status="At client" data-client="CloudPOS Ltd">
+                <td><svg width="14" height="21" viewBox="0 0 20 30" fill="none"><rect x="0.5" y="0.5" width="19" height="29" rx="3" fill="#f0f0ec" stroke="#ccc"/><rect x="1.5" y="2" width="17" height="18" rx="1" fill="#1a1a1a"/><circle cx="10" cy="23" r="2.5" fill="#ccc"/><rect x="3" y="27" width="14" height="1.5" rx="0.5" fill="#e5e5e5"/></svg></td>
+                <td style="font-weight:500">PAX A920</td>
+                <td class="mono">SN-320001</td>
+                <td>Payment terminal</td>
+                <td><span class="badge bc2">At client</span></td>
+                <td>CloudPOS Ltd</td>
+                <td>14 Feb 2025</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+              <tr data-type="Payment terminal" data-status="In stock" data-client="">
+                <td><svg width="14" height="21" viewBox="0 0 20 30" fill="none"><rect x="0.5" y="0.5" width="19" height="29" rx="3" fill="#f0f0ec" stroke="#ccc"/><rect x="1.5" y="2" width="17" height="18" rx="1" fill="#1a1a1a"/><circle cx="10" cy="23" r="2.5" fill="#ccc"/><rect x="3" y="27" width="14" height="1.5" rx="0.5" fill="#e5e5e5"/></svg></td>
+                <td style="font-weight:500">PAX A920</td>
+                <td class="mono">SN-320002</td>
+                <td>Payment terminal</td>
+                <td><span class="badge bs">In stock</span></td>
+                <td style="color:#aaa">—</td>
+                <td>01 May 2025</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+              <tr data-type="Payment terminal" data-status="Retired" data-client="">
+                <td><svg width="12" height="18" viewBox="0 0 17 26" fill="none"><rect x="0.5" y="0.5" width="16" height="25" rx="3" fill="#f0f0ec" stroke="#ccc"/><rect x="2" y="2" width="13" height="14" rx="1" fill="#1a1a1a"/><rect x="3" y="19" width="11" height="4" rx="1.5" fill="#8FE2B0"/></svg></td>
+                <td style="font-weight:500">Castles S1MINI2</td>
+                <td class="mono">SN-312440</td>
+                <td>Payment terminal</td>
+                <td><span class="badge bn">Retired</span></td>
+                <td style="color:#aaa">—</td>
+                <td>10 Nov 2024</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+              <tr data-type="Payment terminal" data-status="At client" data-client="Meridian Beauty">
+                <td><svg width="14" height="20" viewBox="0 0 20 28" fill="none"><rect x="0.5" y="0.5" width="19" height="27" rx="2.5" fill="#f0f0ec" stroke="#ccc"/><rect x="2" y="2" width="16" height="11" rx="1" fill="#1a1a1a"/><rect x="2.5" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="2.5" y="19" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="19" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="19" width="4" height="2.5" rx="0.5" fill="#8FE2B0"/><rect x="2.5" y="24" width="15" height="2" rx="0.5" fill="#e5e5e5"/></svg></td>
+                <td style="font-weight:500">Castles S1F2</td>
+                <td class="mono">SN-298211</td>
+                <td>Payment terminal</td>
+                <td><span class="badge bc2">At client</span></td>
+                <td>Meridian Beauty</td>
+                <td>15 Mar 2025</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+              <tr data-type="Payment terminal" data-status="In refurbishment" data-client="">
+                <td><svg width="14" height="21" viewBox="0 0 20 30" fill="none"><rect x="0.5" y="0.5" width="19" height="29" rx="3" fill="#f0f0ec" stroke="#ccc"/><rect x="1.5" y="2" width="17" height="18" rx="1" fill="#1a1a1a"/><circle cx="10" cy="23" r="2.5" fill="#ccc"/><rect x="3" y="27" width="14" height="1.5" rx="0.5" fill="#e5e5e5"/></svg></td>
+                <td style="font-weight:500">PAX A920</td>
+                <td class="mono">SN-299881</td>
+                <td>Payment terminal</td>
+                <td><span class="badge bk">In refurbishment</span></td>
+                <td style="color:#aaa">—</td>
+                <td>22 Apr 2025</td>
+                <td><button class="btn" onclick="showStockItem()">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pgbar"><span class="pginfo" id="lgCount">Showing 1–10 of 148 items</span><div class="pgnav"><button class="btn-icon"><i class="ti ti-chevron-left"></i></button><button class="btn-icon"><i class="ti ti-chevron-right"></i></button></div></div>
+        </div>
+      </div>
+
+      <!-- ══════════ STOCK DETAIL ══════════ -->
+      <div class="scr" id="scr-stock-detail">
+        <div class="bklnk" onclick="show('logistics')"><i class="ti ti-arrow-left"></i> Logistics</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;background:var(--cpm);border-radius:3px;display:flex;align-items:center;justify-content:center">
+              <svg width="18" height="25" viewBox="0 0 20 28" fill="none"><rect x="0.5" y="0.5" width="19" height="27" rx="2.5" fill="#f0f0ec" stroke="#ccc"/><rect x="2" y="2" width="16" height="11" rx="1" fill="#1a1a1a"/><rect x="2.5" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="15" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="2.5" y="19" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="8" y="19" width="4" height="2.5" rx="0.5" fill="#ccc"/><rect x="13.5" y="19" width="4" height="2.5" rx="0.5" fill="#8FE2B0"/><rect x="2.5" y="24" width="15" height="2" rx="0.5" fill="#e5e5e5"/></svg>
+            </div>
+            <div>
+              <div style="font-size:16px;font-weight:500;color:var(--cpb)">Castles S1F2</div>
+              <div style="display:flex;gap:8px;margin-top:3px;align-items:center">
+                <span class="mono" style="font-size:11px;color:#888">SN-291882</span>
+                <span class="badge bc2">At client</span>
+                <span style="font-size:11px;color:#888">Payment terminal · Countertop</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button class="btn"><i class="ti ti-edit"></i> Edit</button>
+            <button class="btn-icon"><i class="ti ti-dots-vertical"></i></button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:200px 1fr;gap:14px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="card" style="margin-bottom:0">
+              <div style="padding:24px 16px;display:flex;justify-content:center;align-items:center;background:#f8f8f6;border-bottom:0.5px solid #e8e9e4">
+                <svg width="90" height="126" viewBox="0 0 90 126" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1.5" y="1.5" width="87" height="123" rx="10" fill="#f2f2f0" stroke="#d0d1cb" stroke-width="1.5"/>
+                  <rect x="8" y="8" width="74" height="48" rx="4" fill="#111"/>
+                  <rect x="10" y="10" width="24" height="7" rx="2" fill="white" opacity="0.06"/>
+                  <rect x="38" y="59" width="14" height="3" rx="1" fill="#c8c9c4"/>
+                  <rect x="9" y="65" width="21" height="14" rx="2" fill="#e2e3de"/>
+                  <rect x="35" y="65" width="20" height="14" rx="2" fill="#e2e3de"/>
+                  <rect x="60" y="65" width="21" height="14" rx="2" fill="#e2e3de"/>
+                  <rect x="9" y="83" width="21" height="14" rx="2" fill="#e2e3de"/>
+                  <rect x="35" y="83" width="20" height="14" rx="2" fill="#e2e3de"/>
+                  <rect x="60" y="83" width="21" height="14" rx="2" fill="#e2e3de"/>
+                  <rect x="9" y="101" width="21" height="14" rx="2" fill="#e2e3de"/>
+                  <rect x="35" y="101" width="20" height="14" rx="2" fill="#e2e3de"/>
+                  <rect x="60" y="101" width="21" height="14" rx="2" fill="#8FE2B0"/>
+                  <rect x="11" y="5" width="68" height="3" rx="1.5" fill="#e8e9e4"/>
+                </svg>
+              </div>
+              <div style="padding:10px 14px">
+                <div style="font-size:12px;font-weight:500;color:var(--cpb)">Castles S1F2</div>
+                <div style="font-size:11px;color:#888;margin-top:2px">Countertop payment terminal</div>
+              </div>
+            </div>
+            <div class="card" style="margin-bottom:0">
+              <div class="ch"><span class="ct">Current assignment</span></div>
+              <div style="padding:10px 14px">
+                <div class="drow"><span class="dlbl">Client</span><span class="dval">Blossom Retail Co.</span></div>
+                <div class="drow"><span class="dlbl">TID</span><span class="dval mono" style="font-size:12px">TID-3814</span></div>
+                <div class="drow"><span class="dlbl">Location</span><span class="dval">14 Market St</span></div>
+                <div class="drow"><span class="dlbl">Assigned</span><span class="dval">12 Jan 2025</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="twoc" style="margin-bottom:0">
+              <div class="card" style="margin-bottom:0">
+                <div class="ch"><span class="ct">Device details</span></div>
+                <div style="padding:10px 14px">
+                  <div class="drow"><span class="dlbl">Serial no.</span><span class="dval mono" style="font-size:12px">SN-291882</span></div>
+                  <div class="drow"><span class="dlbl">Model</span><span class="dval">Castles S1F2</span></div>
+                  <div class="drow"><span class="dlbl">Item type</span><span class="dval">Payment terminal</span></div>
+                  <div class="drow"><span class="dlbl">Form factor</span><span class="dval">Countertop</span></div>
+                  <div class="drow"><span class="dlbl">Manufactured</span><span class="dval">Mar 2023</span></div>
+                  <div class="drow"><span class="dlbl">First activated</span><span class="dval">12 Jan 2024</span></div>
+                </div>
+              </div>
+              <div class="card" style="margin-bottom:0">
+                <div class="ch"><span class="ct">Technical spec</span></div>
+                <div style="padding:10px 14px">
+                  <div class="drow"><span class="dlbl">PTS version</span><span class="dval">PTS 6.1</span></div>
+                  <div class="drow"><span class="dlbl">OS version</span><span class="dval mono" style="font-size:11px">CastlesOS 2.4.1</span></div>
+                  <div class="drow"><span class="dlbl">Connectivity</span><span class="dval">Ethernet, WiFi</span></div>
+                  <div class="drow"><span class="dlbl">Card schemes</span><span class="dval">Visa, MC, Amex</span></div>
+                  <div class="drow"><span class="dlbl">Contactless</span><span class="dval">Yes (NFC)</span></div>
+                  <div class="drow"><span class="dlbl">Printer</span><span class="dval">Thermal</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="margin-bottom:0">
+              <div class="ch"><span class="ct">Status history</span></div>
+              <div style="padding:10px 15px">
+                <div class="tli">
+                  <div class="tdot" style="background:#1e40af"></div>
+                  <div>
+                    <div class="tt">At client — Blossom Retail Co.</div>
+                    <div class="tm">12 Jan 2025 · TID-3814 · 14 Market St</div>
+                  </div>
+                </div>
+                <div class="tli">
+                  <div class="tdot da"></div>
+                  <div>
+                    <div class="tt">In preparation</div>
+                    <div class="tm">08 Jan 2025 · Config &amp; SIM provisioning</div>
+                  </div>
+                </div>
+                <div class="tli">
+                  <div class="tdot dg"></div>
+                  <div>
+                    <div class="tt">In stock</div>
+                    <div class="tm">20 Dec 2024 · Returned from refurbishment</div>
+                  </div>
+                </div>
+                <div class="tli">
+                  <div class="tdot" style="background:#4c1d95"></div>
+                  <div>
+                    <div class="tt">In refurbishment</div>
+                    <div class="tm">15 Nov 2024 · Printer fault — repaired</div>
+                  </div>
+                </div>
+                <div class="tli">
+                  <div class="tdot" style="background:#1e40af"></div>
+                  <div>
+                    <div class="tt">At client — Blossom Retail Co.</div>
+                    <div class="tm">12 Jan 2024 · Initial deployment</div>
+                  </div>
+                </div>
+                <div class="tli">
+                  <div class="tdot dg"></div>
+                  <div>
+                    <div class="tt">In stock</div>
+                    <div class="tm">10 Mar 2023 · Received from manufacturer</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const SCREENS=['boarding','clients','client-detail','client-txns','client-statements','transactions','analytics','fees','disputes','settlements','ledger'];
+const SCREENS=['boarding','clients','client-detail','client-txns','client-statements','transactions','analytics','fees','disputes','settlements','ledger','logistics','stock-detail'];
 const META={
   boarding:              {bc:'Core /',                      title:'Boarding',              cta:'New application', icon:'ti-plus',        nav:'boarding'},
   clients:               {bc:'Core /',                      title:'Clients',               cta:'Add client',      icon:'ti-plus',        nav:'clients'},
@@ -832,7 +1093,9 @@ const META={
   fees:                  {bc:'Finance /',                   title:'Fees',                  cta:'Fee schedule',    icon:'ti-edit',        nav:'fees'},
   disputes:              {bc:'Core /',                      title:'Disputes',              cta:'New case',        icon:'ti-plus',        nav:'disputes'},
   settlements:           {bc:'Finance /',                   title:'Settlements',           cta:'Preview batch',   icon:'ti-player-play', nav:'settlements'},
-  ledger:                {bc:'Finance /',                   title:'Ledger',                cta:'Manual entry',    icon:'ti-plus',        nav:'ledger'}
+  ledger:                {bc:'Finance /',                   title:'Ledger',                cta:'Manual entry',    icon:'ti-plus',        nav:'ledger'},
+  logistics:             {bc:'Core /',                      title:'Logistics',             cta:'Add item',        icon:'ti-plus',        nav:'logistics'},
+  'stock-detail':        {bc:'Logistics /',                 title:'SN-291882',             cta:'Edit item',       icon:'ti-edit',        nav:'logistics'}
 };
 function show(id){
   SCREENS.forEach(s=>{document.getElementById('scr-'+s).classList.toggle('active',s===id)});
@@ -846,6 +1109,21 @@ function show(id){
   b.innerHTML=`<i class="ti ${m.icon}"></i> ${m.cta}`;
 }
 function showClient(){show('client-detail')}
+function showStockItem(){show('stock-detail')}
+function filterLogistics(){
+  const q=document.getElementById('lgSearch').value.toLowerCase();
+  const type=document.getElementById('lgType').value;
+  const status=document.getElementById('lgStatus').value;
+  const client=document.getElementById('lgClient').value;
+  let vis=0;
+  document.querySelectorAll('#lgTable tbody tr').forEach(r=>{
+    const d=r.dataset;
+    const match=(!q||r.textContent.toLowerCase().includes(q))&&(!type||d.type===type)&&(!status||d.status===status)&&(!client||d.client===client);
+    r.style.display=match?'':'none';
+    if(match)vis++;
+  });
+  document.getElementById('lgCount').textContent=vis===10?'Showing 1–10 of 148 items':'Showing '+vis+' of 148 items';
+}
 function showClientTxns(){show('client-txns')}
 function showClientStatements(){show('client-statements')}
 function setSearchTab(el,ph){
